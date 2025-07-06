@@ -1,95 +1,55 @@
 import Image from "next/image";
 import styles from "./page.module.css";
+import Login from "./components/auth/login/login";
 
 export default function Home() {
   return (
-    <div className={styles.page}>
+    
       <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.js</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        <Login />
+    </main>
   );
 }
+// разговаривать будем на русском а пока изучи проект потом дам задание 
+// contr+shift+p settings настройки
+// shift+alt+t перевод выделеной строки на русский
+//contr+1 скриншот
+// OneDrive/'Рабочий стол'/
+
+// npm run dev
+// ./deploy.sh
+// npm run build && npm run start
+// npm run dev --pwa
+// git add ./
+// git commit -am '
+//  git push
+// git pull 
+// vercel --prod
+// git log
+// git stash
+// git checkout commitProject
+// git branch 
+// git push -f origin HEAD~1:main
+// npm run build
+// Удолить локально коммит
+// git reset HEAD~
+
+// git switch -
+// git merge ref 
+
+//Создать новую ветку и автоматически слить текущую ветку
+// git switch --create <name>
+//Удолить локальную ветку
+//git branch -D name
+//Чтобы удалить ветку из удаленного репозитория, 
+ //git push origin --delete nameBranch
+ 
+// npx prisma
+// npx prisma init
+// npx prisma db pull
+// mkdir -p prisma/migrations/0_init
+// npx prisma migrate diff --from-empty --to-schema-datamodel prisma/schema.prisma --script > prisma/migrations/0_init/migration.sql
+// npx prisma migrate resolve --applied 0_init~
+
+// DATABASE_URL="mysql://auth_headingair:f585811040d0fb4be63060299bf6db5c4b37fb1d@z8z.h.filess.io:3306/auth_headingair"
+// # DATABASE_URL="mysql://root:root@localhost:3306/auth"
