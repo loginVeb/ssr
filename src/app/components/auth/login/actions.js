@@ -1,22 +1,22 @@
+// src/app/components/auth/login/actions.js
 "use server";
 
 export async function login(formData) {
-  const email = formData.get("email");
+  const nickname = formData.get("nickname");
   const password = formData.get("password");
 
-  // Пример валидации
-  if (!email || !password) {
+  // Проверка на пустые поля
+  if (!nickname || !password) {
     throw new Error("Заполните все поля");
   }
 
-  // Имитация запроса к базе данных
+  // Имитация проверки в базе данных
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
-  // Пример проверки логина
-  if (email !== "admin@example.com" || password !== "123456") {
-    throw new Error("Неверный email или пароль");
+  // Проверка учетных данных
+  if (nickname !== "admin" || password !== "123456") {
+    throw new Error("Неверный никнейм или пароль");
   }
 
-  // Успешный вход — редирект
   return { success: true };
 }

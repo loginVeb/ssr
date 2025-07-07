@@ -1,0 +1,50 @@
+/* Стили для контейнера формы */
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Основной стиль формы */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Общие стили для полей ввода */
+.inputNickname,
+.inputPassword {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.inputNickname:focus,
+.inputPassword:focus {
+  border-color: #0070f3;
+  outline: none;
+}
+
+/* Стиль кнопки */
+.button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #005fcc;
+}
