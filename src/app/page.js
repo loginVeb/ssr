@@ -17,6 +17,7 @@ export default function Home() {
 // OneDrive/'Рабочий стол'/
 
 // npm run dev
+// npm run s
 // ./deploy.sh
 // npm run build && npm run start
 // npm run dev --pwa

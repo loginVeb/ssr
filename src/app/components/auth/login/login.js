@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 
 
 async function login(formData) {
@@ -10,19 +11,20 @@ async function login(formData) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ title, body, userId: 1 }),
+    body: JSON.stringify({ nickname, password, id: 1 }),
   });
 
   const post = await response.json();
-  return post;
+  // return post;
+  redirect(`/posts/${post.id}`);
 }
 
 
 export default function Login() {
   return (
     <form action={login} className="form">
-      <input type="text" placeholder="nickname" required name="nickname" />
-      <input type="password" placeholder="password" required name="password" />
+      <input type="text" placeholder="nickname" required name="nickname" autoComplete="username" />
+      <input type="password" placeholder="password" required name="password" autoComplete="current-password" />
       <div>
         <input type="submit" value="Login" />
       </div>
