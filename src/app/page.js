@@ -1,16 +1,16 @@
-import Image from "next/image";
 import styles from "./page.module.css";
 import Login from "./components/auth/login/login";
 
-export default function Home() {
+// Главная страница с формой логина, принимает searchParams и передает в Login
+export default function Home({ searchParams }) {
   return (
-    
-      <main className={styles.main}>
-        <Login />
+    <main className={styles.main}>
+      <Login searchParams={searchParams} />
     </main>
   );
 }
-// разговаривать будем на русском а пока изучи проект потом дам задание 
+
+//разговаривать будем на русском а пока изучи проект потом дам задание 
 // contr+shift+p settings настройки
 // shift+alt+t перевод выделеной строки на русский
 //contr+1 скриншот

@@ -6,12 +6,12 @@ async function login(formData) {
   const { nickname, password } = Object.fromEntries(formData);
 
   // Проверка существования пользователя через json-server
-  const existingUserResponse = await fetch(`http://localhost:3001/users?nickname=${encodeURIComponent(nickname)}`);
+  const existingUserResponse = await fetch("http://localhost:3001/users?nickname=" + encodeURIComponent(nickname));
   const existingUsers = await existingUserResponse.json();
 
   if (existingUsers.length > 0) {
     // При ошибке делаем редирект с параметром ошибки
-    redirect("/login?error=nickname_exists");
+    redirect("/?error=nickname_exists");
   }
 
   // Сохраняем нового пользователя
@@ -32,6 +32,7 @@ async function login(formData) {
 }
 
 export default function Login({ searchParams }) {
+  //  Получаем значение error без await
   const error = searchParams?.error;
 
   return (
