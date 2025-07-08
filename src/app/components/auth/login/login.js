@@ -1,3 +1,4 @@
+// login.js
 import { redirect } from "next/navigation";
 import styles from "./login.module.css";
 
@@ -5,21 +6,20 @@ async function login(formData) {
   "use server";
   const { nickname, password } = Object.fromEntries(formData);
 
-  // Проверка существования пользователя через json-server
-  const existingUserResponse = await fetch("http://localhost:3001/users?nickname=" + encodeURIComponent(nickname));
+  // Проверка существования пользователя
+  const existingUserResponse = await fetch(
+    "http://localhost:3001/users?nickname=" + encodeURIComponent(nickname)
+  );
   const existingUsers = await existingUserResponse.json();
 
   if (existingUsers.length > 0) {
-    // При ошибке делаем редирект с параметром ошибки
     redirect("/?error=nickname_exists");
   }
 
-  // Сохраняем нового пользователя
+  // Создание нового пользователя
   const createUserResponse = await fetch("http://localhost:3001/users", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ nickname, password }),
   });
 
@@ -27,13 +27,13 @@ async function login(formData) {
     throw new Error("Ошибка при создании пользователя");
   }
 
-  // Успешный вход
   redirect("/");
 }
 
-export default function Login({ searchParams }) {
-  //  Получаем значение error без await
-  const error = searchParams?.error;
+export default async function Login({ searchParams }) {
+  // Асинхронно дождитесь разрешения searchParams
+  const params = await searchParams;
+  const error = params?.error;
 
   return (
     <div className={styles.container}>
