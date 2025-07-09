@@ -1,11 +1,15 @@
 import styles from "./page.module.css";
 import Login from "./components/auth/login/login";
+import Registration from "./components/auth/registration/registration";
 
-// Главная страница с формой логина, принимает searchParams и передает в Login
+// Главная страница с формой логина или регистрации, принимает searchParams и передает в соответствующий компонент
 export default function Home({ searchParams }) {
+  const mode = searchParams?.mode || "login";
+
   return (
     <main className={styles.main}>
-      <Login searchParams={searchParams} />
+      {mode === "login" && <Login searchParams={searchParams} />}
+      {mode === "registration" && <Registration searchParams={searchParams} />}
     </main>
   );
 }

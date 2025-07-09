@@ -1,5 +1,5 @@
-// login.js
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import styles from "./login.module.css";
 
 async function login(formData) {
@@ -60,6 +60,9 @@ export default async function Login({ searchParams }) {
         <button type="submit" className={styles.button}>
           Войти
         </button>
+        <Link href="/?mode=registration" className={styles.link}>
+          Регистрация
+        </Link>
       </form>
     </div>
   );

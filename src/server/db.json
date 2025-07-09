@@ -8,52 +8,8 @@
       "name": "Администратор"
     },
     {
-      "id": "2",
-      "nickname": "user1",
-      "password": "password1",
-      "email": "user1@example.com",
-      "name": "Пользователь Один"
-    },
-    {
-      "id": "3",
-      "nickname": "user2",
-      "password": "password2",
-      "email": "user2@example.com",
-      "name": "Пользователь Два"
-    },
-    {
-      "id": "8aa2",
+      "id": "f68c",
       "nickname": "333",
-      "password": "333"
-    },
-    {
-      "id": "b71f",
-      "nickname": "333",
-      "password": "333"
-    },
-    {
-      "id": "2c99",
-      "nickname": "33352",
-      "password": "333"
-    },
-    {
-      "id": "4137",
-      "nickname": "3334",
-      "password": "333"
-    },
-    {
-      "id": "664a",
-      "nickname": "33344",
-      "password": "333"
-    },
-    {
-      "id": "c0a8",
-      "nickname": "333555",
-      "password": "333"
-    },
-    {
-      "id": "2f6a",
-      "nickname": "333ш",
       "password": "333"
     }
   ]
