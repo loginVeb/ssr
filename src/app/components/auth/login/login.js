@@ -1,45 +1,36 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import styles from "./login.module.css";
+import { readFileSync } from "fs";
+import path from "path";
+
+const dbPath = path.resolve("./src/server/db.json");
 
 async function login(formData) {
   "use server";
   const { nickname, password } = Object.fromEntries(formData);
 
-  // Проверка существования пользователя
-  const existingUserResponse = await fetch(
-    "http://localhost:3001/users?nickname=" + encodeURIComponent(nickname)
+  const db = JSON.parse(readFileSync(dbPath, "utf-8"));
+  const user = db.users.find(
+    (u) => u.nickname === nickname && u.password === password
   );
-  const existingUsers = await existingUserResponse.json();
 
-  if (existingUsers.length > 0) {
-    redirect("/?error=nickname_exists");
+  if (!user) {
+    redirect("/?error=not_found");
   }
 
-  // Создание нового пользователя
-  const createUserResponse = await fetch("http://localhost:3001/users", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ nickname, password }),
-  });
-
-  if (!createUserResponse.ok) {
-    throw new Error("Ошибка при создании пользователя");
-  }
-
-  redirect("/");
+  redirect("/user");
 }
 
 export default async function Login({ searchParams }) {
-  // Асинхронно дождитесь разрешения searchParams
   const params = await searchParams;
   const error = params?.error;
 
   return (
     <div className={styles.container}>
       <form action={login} className={styles.form}>
-        {error === "nickname_exists" && (
-          <div className={styles.errorMessage}>Такой ник уже есть</div>
+        {error === "not_found" && (
+          <div className={styles.errorMessage}>Таких данных нет</div>
         )}
         <input
           type="text"
