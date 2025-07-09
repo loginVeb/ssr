@@ -1,60 +1,55 @@
-"use client";
-
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 import styles from "./registration.module.css";
+import { cookies } from "next/headers";
+import jwt from "jsonwebtoken";
+import { readFileSync, writeFileSync } from "fs";
+import path from "path";
+import { redirect } from "next/navigation";
+
+const SECRET_KEY = "your_secret_key"; // В реальном проекте хранить в env
+const dbPath = path.resolve("./src/server/db.json");
 
 async function registerUser(formData) {
+  "use server";
   const { nickname, password, confirmPassword } = Object.fromEntries(formData);
 
   if (password !== confirmPassword) {
     throw new Error("Пароли не совпадают");
   }
 
-  // Проверка существования пользователя
-  const existingUserResponse = await fetch(
-    "http://localhost:3001/users?nickname=" + encodeURIComponent(nickname)
-  );
-  const existingUsers = await existingUserResponse.json();
+  const db = JSON.parse(readFileSync(dbPath, "utf-8"));
+  const existingUser = db.users.find((u) => u.nickname === nickname);
 
-  if (existingUsers.length > 0) {
+  if (existingUser) {
     throw new Error("Такой ник уже есть");
   }
 
-  // Создание нового пользователя
-  const createUserResponse = await fetch("http://localhost:3001/users", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ nickname, password }),
+  const newUser = {
+    id: Date.now().toString(),
+    nickname,
+    password,
+  };
+
+  db.users.push(newUser);
+  writeFileSync(dbPath, JSON.stringify(db, null, 2));
+
+  const token = jwt.sign({ id: newUser.id, nickname: newUser.nickname }, SECRET_KEY, {
+    expiresIn: "1h",
   });
 
-  if (!createUserResponse.ok) {
-    throw new Error("Ошибка при создании пользователя");
-  }
+  cookies().set({
+    name: "token",
+    value: token,
+    httpOnly: true,
+    path: "/",
+  });
+
+  redirect("/user");
 }
 
-export default function Registration() {
-  const [error, setError] = useState(null);
-  const router = useRouter();
-
-  async function handleSubmit(event) {
-    event.preventDefault();
-    setError(null);
-
-    const formData = new FormData(event.target);
-
-    try {
-      await registerUser(formData);
-      router.push("/user");
-    } catch (err) {
-      setError(err.message);
-    }
-  }
-
+export default async function Registration() {
   return (
     <div className={styles.container}>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        {error && <div className={styles.errorMessage}>{error}</div>}
+      <form action={registerUser} className={styles.form}>
         <input
           type="text"
           placeholder="nickname"
