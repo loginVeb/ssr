@@ -3,13 +3,14 @@ import Login from "./components/auth/login/login";
 import Registration from "./components/auth/registration/registration";
 
 // Главная страница с формой логина или регистрации, принимает searchParams и передает в соответствующий компонент
-export default function Home({ searchParams }) {
-  const mode = searchParams?.mode || "login";
+export default async function Home({ searchParams }) {
+  const params = await searchParams;
+  const mode = params?.mode || "login";
 
   return (
     <main className={styles.main}>
-      {mode === "login" && <Login searchParams={searchParams} />}
-      {mode === "registration" && <Registration searchParams={searchParams} />}
+      {mode === "login" && <Login searchParams={params} />}
+      {mode === "registration" && <Registration searchParams={params} />}
     </main>
   );
 }
