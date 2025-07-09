@@ -5,8 +5,9 @@ import styles from "./page.module.css";
 
 const SECRET_KEY = "your_secret_key"; // В реальном проекте хранить в env
 
-export default function User() {
-  const token = cookies().get("token")?.value;
+export default async function User() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
 
   if (!token) {
     redirect("/");

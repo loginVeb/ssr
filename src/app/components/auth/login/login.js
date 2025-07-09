@@ -3,8 +3,11 @@ import Link from "next/link";
 import styles from "./login.module.css";
 import { readFileSync } from "fs";
 import path from "path";
+import { cookies } from "next/headers";
+import jwt from "jsonwebtoken";
 
 const dbPath = path.resolve("./src/server/db.json");
+const SECRET_KEY = "your_secret_key"; // В реальном проекте хранить в env
 
 async function login(formData) {
   "use server";
@@ -18,6 +21,17 @@ async function login(formData) {
   if (!user) {
     redirect("/?error=not_found");
   }
+
+  const token = jwt.sign({ id: user.id, nickname: user.nickname }, SECRET_KEY, {
+    expiresIn: "1h",
+  });
+
+  cookies().set({
+    name: "token",
+    value: token,
+    httpOnly: true,
+    path: "/",
+  });
 
   redirect("/user");
 }
