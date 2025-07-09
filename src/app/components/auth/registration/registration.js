@@ -1,10 +1,15 @@
-import { redirect } from "next/navigation";
-import Link from "next/link";
+"use client";
+
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./registration.module.css";
 
-async function register(formData) {
-  "use server";
-  const { nickname, password } = Object.fromEntries(formData);
+async function registerUser(formData) {
+  const { nickname, password, confirmPassword } = Object.fromEntries(formData);
+
+  if (password !== confirmPassword) {
+    throw new Error("Пароли не совпадают");
+  }
 
   // Проверка существования пользователя
   const existingUserResponse = await fetch(
@@ -13,7 +18,7 @@ async function register(formData) {
   const existingUsers = await existingUserResponse.json();
 
   if (existingUsers.length > 0) {
-    redirect("/?error=nickname_exists");
+    throw new Error("Такой ник уже есть");
   }
 
   // Создание нового пользователя
@@ -26,21 +31,30 @@ async function register(formData) {
   if (!createUserResponse.ok) {
     throw new Error("Ошибка при создании пользователя");
   }
-
-  redirect("/");
 }
 
-export default async function Registration({ searchParams }) {
-  // Асинхронно дождитесь разрешения searchParams
-  const params = await searchParams;
-  const error = params?.error;
+export default function Registration() {
+  const [error, setError] = useState(null);
+  const router = useRouter();
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    setError(null);
+
+    const formData = new FormData(event.target);
+
+    try {
+      await registerUser(formData);
+      router.push("/user");
+    } catch (err) {
+      setError(err.message);
+    }
+  }
 
   return (
     <div className={styles.container}>
-      <form action={register} className={styles.form}>
-        {error === "nickname_exists" && (
-          <div className={styles.errorMessage}>Такой ник уже есть</div>
-        )}
+      <form onSubmit={handleSubmit} className={styles.form}>
+        {error && <div className={styles.errorMessage}>{error}</div>}
         <input
           type="text"
           placeholder="nickname"
@@ -57,12 +71,17 @@ export default async function Registration({ searchParams }) {
           autoComplete="current-password"
           className={styles.inputPassword}
         />
+        <input
+          type="password"
+          placeholder="confirm password"
+          required
+          name="confirmPassword"
+          autoComplete="current-password"
+          className={styles.inputPassword}
+        />
         <button type="submit" className={styles.button}>
           Зарегистрироваться
         </button>
-        <Link href="/?mode=login" className={styles.link}>
-          Войти
-        </Link>
       </form>
     </div>
   );
