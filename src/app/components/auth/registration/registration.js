@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import { readFileSync, writeFileSync } from "fs";
 import path from "path";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 
 const SECRET_KEY = "your_secret_key"; // В реальном проекте хранить в env
 const dbPath = path.resolve("./src/server/db.json");
@@ -46,41 +47,46 @@ export default async function Registration({ searchParams }) {
   return (
     <div className={styles.container}>
       {mode === "registration" && (
-        <form action={registerUser} className={styles.form}>
-          {error === "password_mismatch" && (
-            <div className={styles.errorMessage}>Пароли не совпадают</div>
-          )}
-          {error === "nickname_exists" && (
-            <div className={styles.errorMessage}>Такой ник уже есть</div>
-          )}
-          <input
-            type="text"
-            placeholder="nickname"
-            required
-            name="nickname"
-            autoComplete="username"
-            className={styles.inputNickname}
-          />
-          <input
-            type="password"
-            placeholder="password"
-            required
-            name="password"
-            autoComplete="current-password"
-            className={styles.inputPassword}
-          />
-          <input
-            type="password"
-            placeholder="confirm password"
-            required
-            name="confirmPassword"
-            autoComplete="current-password"
-            className={styles.inputPassword}
-          />
-          <button type="submit" className={styles.button}>
-            Зарегистрироваться
-          </button>
+        <>
+          <form action={registerUser} className={styles.form}>
+            {error === "password_mismatch" && (
+              <div className={styles.errorMessage}>Пароли не совпадают</div>
+            )}
+            {error === "nickname_exists" && (
+              <div className={styles.errorMessage}>Такой ник уже есть</div>
+            )}
+            <input
+              type="text"
+              placeholder="nickname"
+              required
+              name="nickname"
+              autoComplete="username"
+              className={styles.inputNickname}
+            />
+            <input
+              type="password"
+              placeholder="password"
+              required
+              name="password"
+              autoComplete="current-password"
+              className={styles.inputPassword}
+            />
+            <input
+              type="password"
+              placeholder="confirm password"
+              required
+              name="confirmPassword"
+              autoComplete="current-password"
+              className={styles.inputPassword}
+            />
+            <button type="submit" className={styles.button}>
+              Зарегистрироваться
+            </button>
+          <Link href="/?mode=login" className={styles.link}>
+            Вход
+          </Link>
         </form>
+        </>
       )}
     </div>
   );

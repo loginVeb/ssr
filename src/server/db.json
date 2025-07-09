@@ -6,26 +6,6 @@
       "password": "123456",
       "email": "admin@example.com",
       "name": "Администратор"
-    },
-    {
-      "id": "1752087199764",
-      "nickname": "333",
-      "password": "333"
-    },
-    {
-      "id": "1752088524640",
-      "nickname": "33388",
-      "password": "333"
-    },
-    {
-      "id": "1752088582304",
-      "nickname": "333888",
-      "password": "333"
-    },
-    {
-      "id": "1752088844827",
-      "nickname": "333l",
-      "password": "333"
     }
   ]
 }
