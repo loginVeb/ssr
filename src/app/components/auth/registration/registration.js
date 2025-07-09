@@ -1,4 +1,5 @@
 import styles from "./registration.module.css";
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { readFileSync, writeFileSync } from "fs";
 import path from "path";
@@ -23,10 +24,12 @@ async function registerUser(formData) {
     redirect("/?mode=registration&error=nickname_exists");
   }
 
+  const hashedPassword = await bcrypt.hash(password, 10);
+
   const newUser = {
     id: Date.now().toString(),
     nickname,
-    password,
+    password: hashedPassword,
   };
 
   db.users.push(newUser);
