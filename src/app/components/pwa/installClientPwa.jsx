@@ -11,6 +11,7 @@ function InstallClientPwa() {
     if (typeof window === 'undefined') return;
 
     const handleBeforeInstallPrompt = (event) => {
+      console.log('beforeinstallprompt event fired');
       event.preventDefault();
       setDeferredPrompt(event);
       setShowInstallButton(true);

@@ -8,7 +8,7 @@ import Link from "next/link";
 import styles from "./login.module.css";
 
 const dbPath = path.resolve("./src/server/db.json");
-const SECRET_KEY = "your_secret_key"; // В реальном проекте хранить в env
+const SECRET_KEY = process.env.SECRET_KEY; // В реальном проекте хранить в env
 
 async function login(formData) {
   "use server";
