@@ -1,6 +1,7 @@
 import styles from "./page.module.css";
 import Login from "./components/auth/login/login";
 import Registration from "./components/auth/registration/registration";
+import InstallClientPwa from "./components/pwa/installClientPwa";
 
 // Главная страница с формой логина или регистрации, принимает searchParams и передает в соответствующий компонент
 export default async function Home({ searchParams }) {
@@ -9,6 +10,7 @@ export default async function Home({ searchParams }) {
 
   return (
     <main className={styles.main}>
+      <InstallClientPwa styles={styles} />
       {mode === "login" && <Login searchParams={params} />}
       {mode === "registration" && <Registration searchParams={params} />}
     </main>
