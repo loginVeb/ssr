@@ -4,7 +4,7 @@
   "id": "/",
   "theme_color": "#FFFFFF",
   "background_color": "#FFFFFF",
-  "start_url": "/",
+  "start_url": "https://ssr-gamma-seven.vercel.app/",
   "display": "standalone",
   "display_override": ["window-controls-overlay", "standalone"],
   "orientation": "portrait",
